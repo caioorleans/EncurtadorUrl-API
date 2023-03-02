@@ -2,16 +2,15 @@ package ncrtme.dto;
 
 import java.util.Date;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
-@ApiModel(description = "Objeto de requisição POST")
+@Schema(description = "Objeto de requisição POST")
 public class UrlDto {
 	
-	@ApiModelProperty(required=true, notes = "Url a ser convertida")
+	@Schema(description = "Url a ser convertida")
 	private String urlLonga;
 	
-	@ApiModelProperty( notes = "Data de expiração da url")
+	@Schema( description = "Data de expiração da url")
 	private Date dataExpiracao;
 
 	public String getUrlLonga() {
