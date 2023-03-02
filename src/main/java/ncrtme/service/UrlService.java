@@ -4,8 +4,9 @@ import java.util.Date;
 
 import org.springframework.stereotype.Service;
 
-import jakarta.persistence.EntityNotFoundException;
 import ncrtme.dto.UrlDto;
+import ncrtme.exceptionHandlers.exceptions.UrlExpiredException;
+import ncrtme.exceptionHandlers.exceptions.UrlNotFoundException;
 import ncrtme.model.Url;
 import ncrtme.repository.UrlRepository;
 
@@ -33,11 +34,11 @@ public class UrlService {
 	
 	public String obterUrlOriginal(String urlCodificada) {
 		var id = conversaoService.decodificar(urlCodificada);
-		Url url = urlRepository.findById(id).orElseThrow(()-> new EntityNotFoundException("Url não encontrada"));
+		Url url = urlRepository.findById(id).orElseThrow(()-> new UrlNotFoundException());
 		
 		if(url.getDataExpiracao() != null && url.getDataExpiracao().before(new Date())) {
 			urlRepository.delete(url);
-			throw new EntityNotFoundException("Link expirado");
+			throw new UrlExpiredException();
 		}
 		
 		return url.getUrlLonga();
